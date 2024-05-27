@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 
 # Load the dataset
-data = pd.read_csv('D:\Pycharm\IS\Mga Copies\WeatherApp\Weather-Prediction-Data-Sheet1.csv')
+data = pd.read_csv('Weather-Prediction-Data-Sheet1.csv')
 
 
 def predict_temperature(province, city, day1_weather, day2_weather, day3_weather):
