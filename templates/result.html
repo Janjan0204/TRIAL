@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sky Insight Result</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleresult.css') }}">
+</head>
+<body>
+    <div class="imagecontainer">
+        <video autoplay muted loop class="video-bg">
+            <source src="{{ url_for('static', filename='videos/slowedclouds1.mp4') }}" type="video/mp4">
+        </video>
+    </div>
+    <h1>Sky Insight Prediction Result</h1>
+    <div class="Location">
+        <div class="detaillocation">
+            <p><strong>Location</strong></p>
+            <hr>
+            <p>Province: {{ province }}</p>
+            <p>City: {{ city }}</p>
+        </div>
+    </div>
+    <div class="Day1to3">
+        <p><strong>3-Day Forecast</strong></p>
+        <hr>
+        <div class="detailday1">
+            <img src="{{ url_for('static', filename='videos/' + day1_weather|lower + '.gif') }}" alt="Day 1 Weather">
+            <p>Day 1 Weather: {{ day1_weather }}</p>
+        </div>
+        <div class="detailday2">
+            <img src="{{ url_for('static', filename='videos/' + day2_weather|lower + '.gif') }}" alt="Day 2 Weather">
+            <p>Day 2 Weather: {{ day2_weather }}</p>
+        </div>
+        <div class="detailday3">
+            <img src="{{ url_for('static', filename='videos/' + day3_weather|lower + '.gif') }}" alt="Day 3 Weather">
+            <p>Day 3 Weather: {{ day3_weather }}</p>
+        </div>
+    </div>
+    <div class="Prediction">
+        <div class="detailprediction">
+            <img src="{{ url_for('static', filename='videos/' + day4_weather|lower + '.gif') }}" alt="Day 4 Weather">
+            <p>Predicted Day 4 Weather: {{ day4_weather }}</p>
+            <p>Predicted Temperature: {{ temperature }}°C</p>
+        </div>
+    </div>
+    <div class="button-container">
+        <button onclick="window.location.href='{{ url_for('index') }}'">Predict Again</button>
+    </div>
+</body>
+</html>

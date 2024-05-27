@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sky Insight</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+   
+</head>
+<body>
+
+
+    <div class="imagecontainer">
+        <video autoplay muted loop class="video-bg">
+            <source src="{{ url_for('static', filename='videos/slowedclouds1.mp4') }}" type="video/mp4">
+        </video>
+        <div class="overlay"></div> 
+    </div>
+    
+    <h1>Sky Insight</h1>
+    <div class="infocontainer"> 
+        <p>Welcome to Sky Insight, where precision meets convenience. Get forecasts for your location, ensuring every day is planned with confidence.</p>
+    </div>
+    
+    <form method="post">
+        <div class="province">
+            <label for="province">Province:</label>
+            <select id="province" name="province" onchange="updateCities()">
+                <option value="" disabled selected class="placeholder">Select a province</option>
+                {% for province in locations %}
+                <option value="{{ province }}">{{ province }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="city">
+            <label for="city">City:</label>
+            <select id="city" name="city"> 
+                <option value="" disabled selected class="placeholder">Select a city</option>
+            </select>
+        </div>
+        
+        <div class="day1">
+            <label for="day1_weather">Day 1 Weather:</label>
+            <select id="day1_weather" name="day1_weather">
+                <option value="" disabled selected class="placeholder">Select weather</option>
+                {% for weather in weather_conditions %}
+                <option value="{{ weather }}">{{ weather }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="day2">            
+            <label for="day2_weather">Day 2 Weather:</label>
+            <select id="day2_weather" name="day2_weather">
+                <option value="" disabled selected class="placeholder">Select weather</option>
+                {% for weather in weather_conditions %}
+                <option value="{{ weather }}">{{ weather }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="day3">
+            <label for="day3_weather">Day 3 Weather:</label>
+            <select id="day3_weather" name="day3_weather">
+                <option value="" disabled selected class="placeholder">Select weather</option>
+                {% for weather in weather_conditions %}
+                <option value="{{ weather }}">{{ weather }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="button-container">
+            <button type="submit">Predict</button>
+        </div>
+    </form>
+    <div class="time-container">
+        <span id="current-time"></span>
+        <span id="current-date"></span>
+    </div>
+    
+
+    <script>
+        // Function to update the current date and time in the Philippines
+        function updateDateTime() {
+            var now = new Date();
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
+            var phtDate = now.toLocaleDateString('en-US', options);
+            document.getElementById("current-date").textContent = phtDate;
+        }
+        
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+    </script>
+
+    <script>
+        const locations = {{ locations|tojson }};
+        
+        function updateCities() {
+            const provinceSelect = document.getElementById('province');
+            const citySelect = document.getElementById('city');
+            const selectedProvince = provinceSelect.value;
+            
+            // Clear current cities
+            citySelect.innerHTML = '<option value="" disabled selected class="placeholder">Select a city</option>';
+
+            // Populate cities for the selected province
+            if (locations[selectedProvince]) {
+                locations[selectedProvince].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        }
+
+
+  
+        
+        // Initialize the cities for the initial selected province
+        window.onload = updateCities;
+    </script>
+</body>
+</html>
